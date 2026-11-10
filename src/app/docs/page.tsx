@@ -198,7 +198,7 @@ export default function DocsPage() {
                     always agree. Requires Node.js 18 or newer.
                   </p>
                   <div className="instr-cmd-row">
-                    <CopyCommand command="npm install -g backbencher-brain" />
+                    <CopyCommand command="npm install -g @backbencher/brain" />
                   </div>
                 </div>
                 <div className="instr-surface">
@@ -230,7 +230,7 @@ export default function DocsPage() {
                 </p>
                 <p>
                   Pin the npm package with{" "}
-                  <code>npm install -g backbencher-brain@{TRUTH.version}</code>.
+                  <code>npm install -g @backbencher/brain@{TRUTH.version}</code>.
                 </p>
                 <h3>Verify</h3>
                 <pre className="instr-pre">bb --version</pre>
@@ -867,9 +867,9 @@ bb doctor         # is the embedding setup consistent?`}</pre>
                   New releases run idempotent schema migrations when they open the database: an upgraded{" "}
                   <code>bb</code> either uses the existing index as it is or upgrades it in place — it
                   never wipes it. To move to a new release, run{" "}
-                  <code>npm install -g backbencher-brain@latest</code> (or re-run the installer, which
+                  <code>npm install -g @backbencher/brain@latest</code> (or re-run the installer, which
                   does the same thing through npm);{" "}
-                  <code>npm install -g backbencher-brain@{TRUTH.version}</code> pins a specific release.
+                  <code>npm install -g @backbencher/brain@{TRUTH.version}</code> pins a specific release.
                   There is no separate in-place upgrade subcommand.
                 </p>
 
@@ -927,7 +927,7 @@ bb stats                     # committed counts for the current project`}</pre>
                 <p className="docs-note-title">Upgrading keeps your data</p>
                 <p>
                   To move to a new release, run{" "}
-                  <code>npm install -g backbencher-brain@latest</code> — it replaces the installed package
+                  <code>npm install -g @backbencher/brain@latest</code> — it replaces the installed package
                   in place, leaves your index untouched, and there is no separate in-place upgrade
                   subcommand. Details in{" "}
                   <Link href="#data-and-upgrades">Data, upgrades &amp; uninstall</Link>.

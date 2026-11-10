@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/install" },
 }
 
-const COMMAND = "npm install -g backbencher-brain"
+const COMMAND = "npm install -g @backbencher/brain"
 
 export default function InstallPage() {
   return (
@@ -28,7 +28,7 @@ export default function InstallPage() {
             answer reads from it.
           </p>
           <p className="instr-page-meta">
-            npm package backbencher-brain · Node.js &gt;= 18 · macOS · Linux · Windows
+            npm package @backbencher/brain · Node.js &gt;= 18 · macOS · Linux · Windows
           </p>
         </div>
 
@@ -122,7 +122,7 @@ bb stats`}</pre>
           <div className="instr-grid">
             <div className="instr-surface">
               <p className="instr-surface-label">The package</p>
-              <h3>backbencher-brain@{TRUTH.version}</h3>
+              <h3>@backbencher/brain@{TRUTH.version}</h3>
               <p>
                 The published npm package. The shell and PowerShell installers resolve to the same
                 package when npm is available; a release binary is only a fallback and is accepted
@@ -164,10 +164,10 @@ bb stats`}</pre>
             <div className="instr-surface">
               <p className="instr-surface-label">npm</p>
               <pre className="instr-pre">{`# latest
-npm install -g backbencher-brain@latest
+npm install -g @backbencher/brain@latest
 
 # pin this release
-npm install -g backbencher-brain@${TRUTH.version}`}</pre>
+npm install -g @backbencher/brain@${TRUTH.version}`}</pre>
             </div>
             <div className="instr-surface">
               <p className="instr-surface-label">Shell / PowerShell</p>

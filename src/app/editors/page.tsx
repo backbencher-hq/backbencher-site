@@ -83,7 +83,7 @@ const SETUP: Array<{ id: string; name: string; kind: string; steps: string }> = 
     id: 'vscode',
     name: 'VS Code and VS Code forks',
     kind: 'bundled extension',
-    steps: `code --install-extension ${F.extension.name}-${F.extension.version}.vsix`,
+    steps: `curl -LO https://github.com/backbencher-hq/backbencher-brain/releases/download/v${F.extension.version}/${F.extension.name}-${F.extension.version}.vsix\ncode --install-extension ${F.extension.name}-${F.extension.version}.vsix`,
   },
   {
     id: 'zed',
@@ -95,7 +95,7 @@ const SETUP: Array<{ id: string; name: string; kind: string; steps: string }> = 
     id: 'helix',
     name: 'Helix',
     kind: 'languages.toml entry',
-    steps: 'Add a languages.toml entry whose server command is: node "<npm root -g>/backbencher-brain/dist/lsp/server.js"',
+    steps: 'Add a languages.toml entry whose server command is: node "<npm root -g>/@backbencher/brain/dist/lsp/server.js"',
   },
   {
     id: 'jetbrains',
@@ -226,10 +226,10 @@ export default function EditorsPage() {
           <div className="editors-callout">
             <p className="editors-callout-label">Distribution</p>
             <p className="editors-callout-body">
-              The VS Code extension is distributed from the product repository as a VSIX; it is not
-              on a marketplace yet. The {versionRow.extension} extension line requires a server that
-              reports version {versionRow.minServer} or newer, and refuses a server that will not
-              state its version.
+              The VS Code extension is attached to the GitHub release as{' '}
+              <code>bb-lsp-vscode-{F.extension.version}.vsix</code>; it is not on a marketplace yet.
+              The {versionRow.extension} extension line requires a server that reports version{' '}
+              {versionRow.minServer} or newer, and refuses a server that will not state its version.
             </p>
             <p className="editors-callout-body">
               Editor configuration and the server live in the{' '}

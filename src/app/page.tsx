@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 const map = heroMap as unknown as HeroMap
 
 const REGISTRY_IDS = PARSERS.reduce((total, family) => total + family.ids.length, 0)
-const COMMAND = "npm install -g backbencher-brain"
+const COMMAND = "npm install -g @backbencher/brain"
 
 // Wave levels: 0 is the renamed symbol, 1-3 are the traversal hops recorded by
 // the run. An edge is "lit" only when it connects two recorded hops — that is

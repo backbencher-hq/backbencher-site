@@ -2,7 +2,7 @@
 # Backbencher (bb) installer — https://backbencher.cc/install.sh
 #
 # Two install channels, in this order:
-#   1. npm — `npm install -g backbencher-brain`. This is the PRIMARY path: it is
+#   1. npm — `npm install -g @backbencher/brain`. This is the PRIMARY path: it is
 #      the artifact every release publishes, so the binary and the package can
 #      never disagree about the version.
 #   2. GitHub release binary — only when npm is unavailable, or when the caller
@@ -27,7 +27,7 @@ if [ -n "${VERSION:-}" ]; then PINNED=1; fi
 # script/m41/generate-site-truth.ts parses this line for the install page.
 VERSION="${VERSION:-0.1.0}"
 REPO="backbencher-hq/backbencher-brain"
-NPM_PACKAGE="backbencher-brain"
+NPM_PACKAGE="@backbencher/brain"
 INSTALL_DIR="${HOME}/.local/bin"
 CHANNEL="${BB_INSTALL_CHANNEL:-auto}"
 
