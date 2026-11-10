@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base layer for the site. The visual system itself lives in instrument.css;
+   this file only carries the resets, the Tailwind entry, the skip link and the
+   document-level defaults. Do not add page styles here. */
+
+:root {
+  --ground: #0a0b0d;
+  --ink: #eae7e1;
+  --surface-2: #16181b;
+  --line-ember: rgba(255, 91, 51, 0.45);
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+/* Skip link: first focusable element on every page. */
+.skip-to-content {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 60;
+  transform: translateY(-250%);
+  padding: 0.5rem 0.85rem;
+  border: 1px solid var(--line-ember);
+  border-radius: 6px;
+  background: var(--surface-2);
+  color: var(--ink);
+  font-family: var(--font-jbmono), ui-monospace, monospace;
+  font-size: 13px;
+  transition: transform 0.15s ease;
+}
+
+.skip-to-content:focus-visible {
+  transform: translateY(0);
+}
+
+::selection {
+  background: rgba(255, 91, 51, 0.35);
+  color: #fff;
+}
+
+/* Reduced motion: a global floor; page-specific motion also honours it. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

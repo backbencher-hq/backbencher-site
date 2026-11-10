@@ -1,0 +1,23 @@
+name: Wrong product fact
+description: A number, version, tool name, language or install snippet on the site is wrong.
+labels: ["type/data"]
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Page URL
+    validations:
+      required: true
+  - type: textarea
+    id: claim
+    attributes:
+      label: What the site says
+    validations:
+      required: true
+  - type: textarea
+    id: truth
+    attributes:
+      label: What is actually true, and where you checked it
+      description: Point at the product source (file, command output, release note). Do not edit the generated data file yourself.
+    validations:
+      required: true

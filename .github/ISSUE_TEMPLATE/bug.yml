@@ -1,0 +1,35 @@
+name: Page bug
+description: A page is broken, overflows, 404s, or renders wrong.
+labels: ["type/bug"]
+body:
+  - type: input
+    id: url
+    attributes:
+      label: Page URL or route
+      placeholder: https://backbencher.cc/tools
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What actually happened
+      description: Include the exact error text. A screenshot helps.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Browser / OS / viewport width
+      placeholder: Firefox 140, Linux, 390x844
+  - type: checkboxes
+    id: a11y
+    attributes:
+      label: Accessibility
+      options:
+        - label: This bug affects keyboard use, screen readers, contrast or reduced motion

@@ -1,0 +1,626 @@
+/* /docs — page-local styles for the instrument guide.
+ *
+ * The base identity (tokens, nav, footer, section rhythm, grid, surfaces, code
+ * plates, numbered steps) lives in instrument.css; this file adds only what a
+ * long reference page needs and nothing another route shares:
+ *
+ *   · the two-column layout: sticky in-page nav beside a wide reading column
+ *     (it collapses to a scrollable chip row below 960px);
+ *   · prose inside a section, which instrument.css does not cover because no
+ *     other converted route has body copy this dense;
+ *   · the reference tables (size tiers, changed-file phases, tool catalogue,
+ *     CLI flags) and the command register;
+ *   · the note/aside box and the grouped fix cards.
+ *
+ * Every rule is scoped under .docs-page so nothing here can reach another
+ * route, and every class carries the docs- prefix.
+ */
+
+/* ---------- two-column layout ---------- */
+
+.instr .docs-page .docs-layout {
+  display: grid;
+  grid-template-columns: 208px minmax(0, 1fr);
+  gap: 56px;
+  align-items: start;
+  margin-top: 40px;
+}
+
+.instr .docs-page .docs-sidebar {
+  align-self: stretch;
+  padding-top: 64px;
+}
+
+.instr .docs-page .docs-sidebar-inner {
+  position: sticky;
+  top: 88px;
+  max-height: calc(100vh - 112px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.instr .docs-page .docs-main {
+  min-width: 0;
+}
+
+/* The anchor target has to clear the sticky product nav when a deep link
+   (from the install page, a language record or the /troubleshooting redirect)
+   opens the page mid-scroll. */
+.instr .docs-page .docs-section {
+  scroll-margin-top: 88px;
+}
+
+.instr .docs-page .docs-command {
+  scroll-margin-top: 88px;
+}
+
+/* ---------- in-page nav ---------- */
+
+.instr .docs-page .docs-toc-label {
+  margin: 0 0 12px 14px;
+  font-family: var(--font-jbmono), monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.instr .docs-page .docs-toc ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-left: 1px solid var(--line);
+}
+
+.instr .docs-page .docs-toc a {
+  display: block;
+  margin-left: -1px;
+  padding: 5px 0 5px 13px;
+  border-left: 1px solid transparent;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--ink-3);
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.instr .docs-page .docs-toc a:hover {
+  color: var(--ink);
+  border-left-color: var(--line-2);
+}
+
+/* ---------- section body copy ---------- */
+
+.instr .docs-page .docs-body > h3 {
+  margin: 36px 0 0;
+  font-family: var(--font-archivo), sans-serif;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.instr .docs-page .docs-body > h3:first-child {
+  margin-top: 26px;
+}
+
+.instr .docs-page .docs-body > p {
+  margin: 14px 0 0;
+  max-width: 74ch;
+  font-size: 15px;
+  line-height: 1.72;
+  color: var(--ink-2);
+}
+
+.instr .docs-page .docs-body > ul,
+.instr .docs-page .docs-body > ol {
+  margin: 14px 0 0;
+  padding-left: 20px;
+  max-width: 74ch;
+}
+
+.instr .docs-page .docs-body li {
+  margin-top: 8px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink-2);
+}
+
+.instr .docs-page .docs-body li::marker {
+  color: var(--ink-3);
+}
+
+.instr .docs-page .docs-body strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* An h3 that introduces a card grid: the grid's own 32px top margin would read
+   as a gap between the heading and the cards it introduces. */
+.instr .docs-page .docs-body + .instr-grid {
+  margin-top: 16px;
+}
+
+.instr .docs-page .docs-body > pre.instr-pre,
+.instr .docs-page .docs-body .instr-pre {
+  margin: 14px 0 0;
+}
+
+/* ---------- links ---------- */
+
+.instr .docs-page .docs-main a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--line-2);
+  text-underline-offset: 3px;
+}
+
+.instr .docs-page .docs-main a:hover {
+  color: var(--acc-soft);
+}
+
+/* Navigation cards are blocks, not inline prose links. */
+.instr .docs-page .docs-main .instr-next {
+  text-decoration: none;
+}
+
+.instr .docs-page .docs-main .instr-next:hover {
+  color: inherit;
+}
+
+.instr .docs-page .docs-more {
+  margin: 18px 0 0;
+  font-size: 14px;
+}
+
+.instr .docs-page .docs-more a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-weight: 500;
+  color: var(--acc);
+  text-decoration: none;
+}
+
+.instr .docs-page .docs-more a:hover {
+  color: var(--acc-soft);
+}
+
+/* ---------- inline code ---------- */
+
+.instr .docs-page p code,
+.instr .docs-page li code,
+.instr .docs-page dd code,
+.instr .docs-page .instr-surface p code,
+.instr .docs-page .docs-table td code {
+  padding: 1px 5px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.04);
+  font-family: var(--font-jbmono), monospace;
+  font-size: 12.5px;
+  color: var(--acc-soft);
+  overflow-wrap: anywhere;
+}
+
+/* A code plate is already code: an inline chip inside it would double the
+   border, so any nested <code> renders as plain plate text instead. */
+.instr .docs-page .instr-pre code {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-size: inherit;
+}
+
+/* ---------- chips (skip dirs, env names, subcommands) ---------- */
+
+.instr .docs-page .docs-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+  max-width: 78ch;
+}
+
+.instr .docs-page .docs-chip {
+  padding: 2px 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--g2);
+  font-family: var(--font-jbmono), monospace;
+  font-size: 11.5px;
+  color: var(--acc-soft);
+}
+
+/* ---------- command rows ---------- */
+
+/* The first-index follow-ups: a command paired with the one thing it is for.
+   Rows, not cards — four alternatives read faster as a list than as a grid. */
+.instr .docs-page .docs-cmds {
+  margin: 22px 0 0;
+  border-top: 1px solid var(--line-2);
+}
+
+.instr .docs-page .docs-cmds > div {
+  display: grid;
+  grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+  gap: 6px 24px;
+  align-items: baseline;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.instr .docs-page .docs-cmds dt {
+  min-width: 0;
+}
+
+.instr .docs-page .docs-cmds dt code {
+  font-family: var(--font-jbmono), monospace;
+  font-size: 12.5px;
+  color: var(--acc-soft);
+  overflow-wrap: anywhere;
+}
+
+.instr .docs-page .docs-cmds dd {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
+/* ---------- reference tables ---------- */
+
+.instr .docs-page .docs-table-wrap {
+  margin-top: 18px;
+  max-width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--g1);
+  overflow: hidden;
+}
+
+.instr .docs-page .docs-table-scroll {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.instr .docs-page .docs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.instr .docs-page .docs-table.wide {
+  min-width: 560px;
+}
+
+.instr .docs-page .docs-table th {
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.02);
+  text-align: left;
+  white-space: nowrap;
+  font-family: var(--font-jbmono), monospace;
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.instr .docs-page .docs-table td {
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
+.instr .docs-page .docs-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.instr .docs-page .docs-table td:first-child {
+  color: var(--ink);
+}
+
+.instr .docs-page .docs-table td.mono {
+  white-space: nowrap;
+  font-family: var(--font-jbmono), monospace;
+  font-size: 12px;
+  color: var(--ink);
+}
+
+.instr .docs-page .docs-table td.mono a {
+  color: inherit;
+  text-decoration-color: var(--line-2);
+}
+
+.instr .docs-page .docs-table td.docs-cell-group {
+  white-space: nowrap;
+  font-family: var(--font-jbmono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* ---------- note / aside ---------- */
+
+.instr .docs-page .docs-note {
+  margin: 24px 0 0;
+  padding: 15px 18px;
+  max-width: 78ch;
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--acc);
+  border-radius: 0 8px 8px 0;
+  background: rgba(255, 91, 51, 0.05);
+}
+
+.instr .docs-page .docs-note-safe {
+  border-left-color: var(--moss);
+  background: rgba(143, 180, 138, 0.05);
+}
+
+.instr .docs-page .docs-note p {
+  margin: 6px 0 0;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--ink-2);
+}
+
+.instr .docs-page .docs-note p.docs-note-title {
+  margin: 0;
+  font-family: var(--font-archivo), sans-serif;
+  font-size: 14.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+/* ---------- CLI command register ---------- */
+
+.instr .docs-page .docs-commands {
+  margin-top: 38px;
+  border-top: 1px solid var(--line-2);
+}
+
+.instr .docs-page .docs-command {
+  padding: 28px 0 30px;
+  border-bottom: 1px solid var(--line);
+}
+
+.instr .docs-page .docs-command-usage {
+  margin: 0;
+  font-family: var(--font-jbmono), monospace;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--acc-soft);
+  overflow-wrap: anywhere;
+}
+
+.instr .docs-page .docs-command-summary {
+  margin: 8px 0 0;
+  max-width: 74ch;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--ink-2);
+}
+
+.instr .docs-page .docs-meta-label {
+  margin: 18px 0 0;
+  font-family: var(--font-jbmono), monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.instr .docs-page .docs-arg-list {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  max-width: 74ch;
+}
+
+.instr .docs-page .docs-arg-list li {
+  margin-top: 5px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
+.instr .docs-page .docs-arg-list li::marker {
+  color: var(--ink-4);
+}
+
+.instr .docs-page .docs-command .docs-chips {
+  margin-top: 8px;
+}
+
+.instr .docs-page .docs-command .docs-table-wrap {
+  margin-top: 16px;
+}
+
+/* ---------- storage paths ---------- */
+
+.instr .docs-page .docs-paths {
+  margin: 16px 0 0;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--g1);
+  overflow: hidden;
+}
+
+.instr .docs-page .docs-paths > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 14px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.instr .docs-page .docs-paths > div:last-child {
+  border-bottom: 0;
+}
+
+.instr .docs-page .docs-paths dt {
+  min-width: 0;
+}
+
+.instr .docs-page .docs-paths dt code {
+  font-family: var(--font-jbmono), monospace;
+  font-size: 12px;
+  color: var(--acc-soft);
+  overflow-wrap: anywhere;
+}
+
+.instr .docs-page .docs-paths dd {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
+/* ---------- troubleshooting cards ---------- */
+
+.instr .docs-page .docs-fixes {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.instr .docs-page .docs-fix {
+  display: flex;
+  flex-direction: column;
+}
+
+.instr .docs-page .docs-fix .instr-pre {
+  margin-top: 12px;
+}
+
+.instr .docs-page .instr-surface .docs-fix-extra {
+  margin-top: 10px;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--ink-3);
+}
+
+/* ---------- footer ---------- */
+
+.instr .docs-page .docs-foot {
+  margin-top: 8px;
+  padding: 26px 0 84px;
+  border-top: 1px solid var(--line);
+}
+
+.instr .docs-page .docs-foot p {
+  margin: 0;
+  max-width: 74ch;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink-3);
+}
+
+.instr .docs-page .docs-foot-links {
+  margin-top: 16px;
+}
+
+.instr .docs-page .docs-foot-links a {
+  font-family: var(--font-jbmono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+  text-decoration: none;
+}
+
+.instr .docs-page .docs-foot-links a:hover {
+  color: var(--ink);
+}
+
+/* ---------- responsive ---------- */
+
+/* Below the two-column breakpoint the in-page nav becomes one horizontally
+   scrollable row of anchor chips directly above the content, so the page keeps
+   its scroll position and the content keeps the full column width. */
+@media (max-width: 960px) {
+  .instr .docs-page .docs-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    margin-top: 28px;
+  }
+
+  .instr .docs-page .docs-sidebar {
+    align-self: auto;
+    padding-top: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .instr .docs-page .docs-sidebar-inner {
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .instr .docs-page .docs-toc-label {
+    display: none;
+  }
+
+  .instr .docs-page .docs-toc ol {
+    display: flex;
+    gap: 8px;
+    padding: 16px 0;
+    border-left: 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+  }
+
+  .instr .docs-page .docs-toc a {
+    margin: 0;
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    white-space: nowrap;
+    font-size: 12px;
+  }
+
+  .instr .docs-page .docs-toc a:hover {
+    border-color: var(--line-2);
+  }
+
+  .instr .docs-page .docs-main > .instr-section:first-child {
+    border-top: 0;
+  }
+
+  .instr .docs-page .docs-section,
+  .instr .docs-page .docs-command {
+    scroll-margin-top: 76px;
+  }
+}
+
+@media (max-width: 640px) {
+  .instr .docs-page .docs-body > p,
+  .instr .docs-page .docs-body li {
+    font-size: 14.5px;
+  }
+
+  .instr .docs-page .docs-command-usage {
+    font-size: 12.5px;
+  }
+
+  .instr .docs-page .docs-paths > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+
+  .instr .docs-page .docs-cmds > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 3px;
+  }
+
+  .instr .docs-page .docs-table th,
+  .instr .docs-page .docs-table td {
+    padding: 10px 13px;
+  }
+}

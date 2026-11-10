@@ -1,0 +1,38 @@
+name: Design proposal
+description: Propose a change to layout, visual design, typography or motion.
+labels: ["area/design"]
+body:
+  - type: input
+    id: pages
+    attributes:
+      label: Page(s) affected
+      placeholder: /, /install
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong today
+      description: Evidence beats opinion — screenshot, measurement, or a user problem.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you propose
+      description: Sketch, mock, or describe the change. Note what it replaces.
+    validations:
+      required: true
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints you respected
+      description: Type scale, colour tokens, page weight, reduced motion, responsive behaviour, accessibility.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: It follows DESIGN.md (no second visual world)
+        - label: It was checked at 1440 px and 390 px
+        - label: It works with keyboard and prefers-reduced-motion

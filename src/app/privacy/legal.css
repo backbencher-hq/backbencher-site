@@ -1,0 +1,155 @@
+/* Legal reading surface — shared by /privacy and /terms.
+   Both documents are the same artifact: one reading column capped near 72ch,
+   ruled sections with stable anchors, an effective-date line and a cross-link
+   foot. The file lives beside /privacy and is imported by both routes so the
+   pair cannot drift apart. Nothing here reaches outside the instrument shell. */
+
+/* The body column. instrument.css gives .instr .reading an 880px measure; a
+   legal document reads better around 72ch, so the body re-caps it. */
+.instr .reading.legal-body {
+  max-width: 72ch;
+}
+
+/* The effective date is a fact, not decoration: it gets its own ruled line,
+   with the word that gives it meaning written out beside it. */
+.instr .legal-effective {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin: 24px 0 0;
+  padding-left: 12px;
+  border-left: 2px solid var(--acc);
+  font-family: var(--font-jbmono), monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
+.instr .legal-effective-label {
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* The section index: every anchor in the document, listed once. */
+.instr .legal-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 18px;
+  margin: 34px 0 0;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.instr .legal-toc a {
+  display: inline-block;
+  padding: 5px 0;
+  font-family: var(--font-jbmono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  transition: color 0.15s ease;
+}
+
+.instr .legal-toc a:hover {
+  color: var(--ink);
+}
+
+/* One hairline per section, so a long document can be scanned by its headings. */
+.instr .reading.legal-body .legal-section {
+  padding: 32px 0;
+  border-top: 1px solid var(--line);
+  scroll-margin-top: 84px;
+}
+
+.instr .reading.legal-body .legal-section:first-of-type {
+  padding-top: 28px;
+  border-top: 0;
+}
+
+.instr .reading.legal-body .legal-section h2 {
+  margin: 0;
+}
+
+/* Lists are the one block .instr .reading does not style — and Tailwind's
+   preflight strips the bullets, so the marker is restored here. */
+.instr .reading.legal-body ul {
+  margin: 14px 0 0;
+  padding-left: 20px;
+  list-style: disc;
+}
+
+.instr .reading.legal-body li {
+  margin-top: 9px;
+  font-size: 15px;
+  line-height: 1.72;
+  color: var(--ink-2);
+}
+
+.instr .reading.legal-body li::marker {
+  color: var(--acc);
+}
+
+.instr .reading.legal-body strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.instr .reading.legal-body code {
+  overflow-wrap: anywhere;
+}
+
+/* The cross-links at the end of each document. */
+.instr .legal-foot {
+  max-width: 72ch;
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line-2);
+}
+
+.instr .legal-foot p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink-3);
+}
+
+.instr .legal-foot p + p {
+  margin-top: 8px;
+}
+
+.instr .legal-foot a {
+  color: var(--ink-2);
+  text-decoration: underline;
+  text-decoration-color: var(--line-2);
+  text-underline-offset: 3px;
+}
+
+.instr .legal-foot a:hover {
+  color: var(--ink);
+}
+
+@media (max-width: 640px) {
+  .instr .legal-effective {
+    margin-top: 20px;
+    font-size: 11.5px;
+  }
+
+  .instr .legal-toc {
+    margin-top: 28px;
+    padding: 12px 0;
+    gap: 6px 14px;
+  }
+
+  .instr .reading.legal-body .legal-section {
+    padding: 26px 0;
+  }
+
+  .instr .reading.legal-body .legal-section:first-of-type {
+    padding-top: 22px;
+  }
+}

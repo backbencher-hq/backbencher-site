@@ -1,0 +1,4 @@
+# CODEOWNERS for backbencher-hq/backbencher-site
+# Every change is reviewed by the maintainer; directory-level entries are only
+# needed when a path gets a different owner.
+* @ishaq2321
