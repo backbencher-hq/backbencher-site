@@ -4,7 +4,7 @@
 // the repo's own index counts from a recorded bb session.
 export const TRUTH = {
   schemaVersion: 1,
-  version: "0.1.0",
+  version: "0.1.2",
   tables: 16,
   languages: {
     classified: 53,
@@ -13,7 +13,7 @@ export const TRUTH = {
   },
   cliCommands: ["doctor","health","help","index","mcp","onboard","projects","search","setup","stats","status","tool","upgrade","version"],
   install: {
-    version: "0.1.0",
+    version: "0.1.2",
     repo: "backbencher-hq/backbencher-brain",
   },
   tools: [
