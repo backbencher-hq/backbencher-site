@@ -339,7 +339,7 @@ export default async function LanguageDetailPage({ params }: { params: Params })
             The extensions, registry names, recorded symbols and relationship types above are the parser registry row
             for {parser.name}, read while the page rendered — the same row <Link href="/languages">the register</Link>{" "}
             reads, so the two surfaces cannot tell two stories. Every relationship type listed as constructed appears
-            in <code>src/ast/real-*</code>, the analyzer modules bb ships. bb {TRUTH.version} answers from a local store
+            in <code>src/ast/real-*</code>, the analyzer modules bb ships. bb answers from a local store
             over {PARSERS.length} languages ({TRUTH.languages.classified} registry ids, three of them aliases).
              There is no benchmark on this page: every claim here is one you can go and read in the source.
           </p>

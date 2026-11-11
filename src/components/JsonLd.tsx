@@ -12,7 +12,6 @@ export function JsonLd() {
     alternateName: ["bb", "bb cli", "bb mcp", "backbencher-brain"],
     applicationCategory: "DeveloperApplication",
     operatingSystem: "macOS, Linux, Windows",
-    softwareVersion: TRUTH.version,
     description: `bb (Backbencher): local-first code intelligence — AST indexing into ${TRUTH.tables} SQLite tables across ${PARSERS.length} languages (${TRUTH.languages.classified} registry ids), code search, symbol extraction, call-graph analysis, and ${TRUTH.tools.length} MCP agent tools.`,
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
     author: { "@type": "Person", name: "Muhammad Ishaq Khan", alternateName: "ishaq2321", url: "https://ishaq2321.github.io", sameAs: ["https://ishaq2321.github.io", "https://www.linkedin.com/in/2321ishaq", "https://github.com/ishaq2321"] },

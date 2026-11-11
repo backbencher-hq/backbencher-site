@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { TRUTH } from "@/data/truth.generated"
 import { InstrumentShell } from "@/components/instrument/InstrumentShell"
 import { CopyCommand } from "@/components/instrument/CopyCommand"
 
@@ -18,7 +17,7 @@ export default function InstallPage() {
     <InstrumentShell active="/install">
       <div className="instr-wrap instr-page">
         <div className="instr-page-head">
-          <p className="instr-eyebrow">Install · bb {TRUTH.version}</p>
+          <p className="instr-eyebrow">Install · latest</p>
           <h1 className="instr-title">
             Install once. Answer <em>locally.</em>
           </h1>
@@ -122,7 +121,7 @@ bb stats`}</pre>
           <div className="instr-grid">
             <div className="instr-surface">
               <p className="instr-surface-label">The package</p>
-              <h3>@backbencher/brain@{TRUTH.version}</h3>
+              <h3>@backbencher/brain</h3>
               <p>
                 The published npm package. The shell and PowerShell installers resolve to the same
                 package when npm is available; a release binary is only a fallback and is accepted
@@ -166,17 +165,17 @@ bb stats`}</pre>
               <pre className="instr-pre">{`# latest
 npm install -g @backbencher/brain@latest
 
-# pin this release
-npm install -g @backbencher/brain@${TRUTH.version}`}</pre>
+# pin any published release
+npm install -g @backbencher/brain@<version>`}</pre>
             </div>
             <div className="instr-surface">
               <p className="instr-surface-label">Shell / PowerShell</p>
               <pre className="instr-pre">{`# pin this release
-VERSION=${TRUTH.version} \\
+VERSION=<version> \\
   curl -fsSL https://backbencher.cc/install.sh | bash
 
 # Windows
-$env:VERSION="${TRUTH.version}"
+$env:VERSION="<version>"
 irm https://backbencher.cc/install.ps1 | iex`}</pre>
             </div>
           </div>

@@ -149,7 +149,7 @@ export default function DocsPage() {
     <InstrumentShell active="/docs">
       <div className="instr-wrap instr-page docs-page">
         <div className="instr-page-head" id="top" tabIndex={-1}>
-          <p className="instr-eyebrow">Documentation · bb {TRUTH.version}</p>
+          <p className="instr-eyebrow">Documentation · latest</p>
           <h1 className="instr-title">
             The Backbencher <em>guide.</em>
           </h1>
@@ -225,12 +225,13 @@ export default function DocsPage() {
                   unavailable do they fall back to a release binary from the{" "}
                   <code>backbencher-hq/backbencher-brain</code> GitHub releases, and only after its
                   sha256 checksum verifies against the release’s <code>checksums.txt</code>. Pin
-                  with <code>VERSION={TRUTH.version}</code> in front of either command (
-                  <code>$env:VERSION=&quot;{TRUTH.version}&quot;</code> on Windows).
+                  with <code>VERSION=&lt;version&gt;</code> in front of either command (
+                  <code>$env:VERSION=&quot;&lt;version&gt;&quot;</code> on Windows); every release
+                  on the GitHub releases page names its exact versions and checksums.
                 </p>
                 <p>
                   Pin the npm package with{" "}
-                  <code>npm install -g @backbencher/brain@{TRUTH.version}</code>.
+                  <code>npm install -g @backbencher/brain@&lt;version&gt;</code>.
                 </p>
                 <h3>Verify</h3>
                 <pre className="instr-pre">bb --version</pre>
@@ -869,7 +870,7 @@ bb doctor         # is the embedding setup consistent?`}</pre>
                   never wipes it. To move to a new release, run{" "}
                   <code>npm install -g @backbencher/brain@latest</code> (or re-run the installer, which
                   does the same thing through npm);{" "}
-                  <code>npm install -g @backbencher/brain@{TRUTH.version}</code> pins a specific release.
+                  <code>npm install -g @backbencher/brain@&lt;version&gt;</code> pins a specific release.
                   There is no separate in-place upgrade subcommand.
                 </p>
 

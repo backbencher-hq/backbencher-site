@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react'
 import Link from 'next/link'
-import { TRUTH } from '@/data/truth.generated'
 
 // The instrument shell every converted page renders: one nav, one footer, one
 // surface. Pages own their content and pass `active` so the current route is
@@ -32,7 +31,6 @@ export function InstrumentShell({ children, active }: { children: ReactNode; act
             ))}
           </nav>
           <div className="instr-nav-right">
-            <span className="instr-ver">v{TRUTH.version}</span>
             <a
               className="instr-gh"
               href="https://github.com/backbencher-hq/backbencher-brain"
