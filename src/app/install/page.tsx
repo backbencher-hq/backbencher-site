@@ -1,211 +1,103 @@
-import type { Metadata } from "next"
 import Link from "next/link"
-import { InstrumentShell } from "@/components/instrument/InstrumentShell"
-import { CopyCommand } from "@/components/instrument/CopyCommand"
+import type { Metadata } from "next"
+import { TRUTH } from "@/data/truth.generated"
+import { AtlasPage, PageHead } from "@/components/atlas/AtlasPage"
+import { InstallTabs } from "@/components/InstallTabs"
 
 export const metadata: Metadata = {
-  title: "Install bb — local code intelligence",
+  title: "Install",
   description:
-    "Install the Backbencher CLI with npm, or with the shell and PowerShell installers on macOS, Linux and Windows. Your code never leaves your machine.",
-  alternates: { canonical: "/install" },
+    "Install the Backbencher CLI with npm, or with the shell/PowerShell installers on macOS, Linux, or Windows. Local-first code intelligence: your code never leaves your machine.",
+  alternates: { canonical: "https://backbencher.cc/install" },
 }
 
-const COMMAND = "npm install -g @backbencher/brain"
+// 2026-11-07 — Evidence Atlas surface. The install *claims* come from generated
+// truth (TRUTH.install is parsed from the shipped install.sh), so the page cannot
+// describe a release the scripts do not serve.
+// 2026-11-08 — 0.1.0 is the first published release, so npm is the primary path;
+// the curl/irm installers are alternatives that prefer npm themselves.
 
 export default function InstallPage() {
   return (
-    <InstrumentShell active="/install">
-      <div className="instr-wrap instr-page">
-        <div className="instr-page-head">
-          <p className="instr-eyebrow">Install · latest</p>
-          <h1 className="instr-title">
-            Install once. Answer <em>locally.</em>
-          </h1>
-          <p className="instr-page-lead">
-            One npm package puts the CLI, the index and the MCP server on your machine. There is no
-            account, no cloud index and no API key to start: your source stays on disk, and every
-            answer reads from it.
-          </p>
-          <p className="instr-page-meta">
-            npm package @backbencher/brain · Node.js &gt;= 18 · macOS · Linux · Windows
-          </p>
-        </div>
+    <AtlasPage>
+      <div className="container">
+        <PageHead
+          title="Install Backbencher"
+          lead={
+            <>
+              Install the published package with <code>npm install -g @backbencher/brain</code> (Node.js &gt;= 18), or
+              use the shell/PowerShell installer if you would rather not manage a global npm package. Everything — the
+              index, the analysis, the MCP server — runs locally. Your source code never leaves your machine.
+            </>
+          }
+          meta={TRUTH.install.version ? `installer release ${TRUTH.install.version} · engine ${TRUTH.version}` : `engine ${TRUTH.version}`}
+        />
 
-        <section id="methods" className="instr-section">
-          <h2 className="instr-section-title">Three ways in.</h2>
-          <p className="instr-section-lead">
-            npm is the primary path and the version-exact artifact every release publishes. The
-            installers prefer npm too; they fall back to a checksum-verified release binary only when
-            npm is unavailable.
+        <div className="reading" style={{ paddingBottom: 0 }}>
+          <InstallTabs />
+
+          <h2>Verify the install</h2>
+          <pre><code>bb --version</code></pre>
+          <p>
+            With npm, <code>bb</code> lands in your npm global prefix (<code>npm prefix -g</code>); make sure that
+            directory's <code>bin</code> is on your PATH. The installers put it in <code>~/.local/bin</code>{" "}
+            (<code>%USERPROFILE%\.local\bin</code> on Windows) when they fall back to a release binary.
           </p>
-          <div className="instr-grid">
-            <div className="instr-surface primary">
-              <p className="instr-surface-label">Primary · npm</p>
-              <h3>npm</h3>
-              <p>Best when you already use Node.js. Version-exact, and the package the CLI upgrades from.</p>
-              <div className="instr-cmd-row">
-                <CopyCommand command={COMMAND} />
-              </div>
-              <p className="instr-note">
-                bb lands in your npm global prefix — npm prefix -g — so make sure its bin directory is
-                on PATH.
-              </p>
-            </div>
-            <div className="instr-surface">
-              <p className="instr-surface-label">Shell installer</p>
-              <h3>macOS &amp; Linux</h3>
-              <p>Downloads the installer, which installs the same npm package and verifies what it runs.</p>
-              <div className="instr-cmd-row">
-                <CopyCommand command="curl -fsSL https://backbencher.cc/install.sh | bash" />
-              </div>
-              <p className="instr-note">Falls back to a release binary only when npm is unavailable.</p>
-            </div>
-            <div className="instr-surface">
-              <p className="instr-surface-label">PowerShell installer</p>
-              <h3>Windows</h3>
-              <p>PowerShell installer for x64 and ARM64; it installs the npm package first, too.</p>
-              <div className="instr-cmd-row">
-                <CopyCommand command="irm https://backbencher.cc/install.ps1 | iex" />
-              </div>
-              <p className="instr-note">A release fallback lands in %USERPROFILE%\.local\bin.</p>
-            </div>
+
+          <div className="note-plate">
+            <h2>What gets installed</h2>
+            <p>
+              The npm package <code>@backbencher/brain</code>. Unpinned, the installers resolve the newest published
+              release at run time — npm <code>@latest</code>, or the latest GitHub release when they fall back to a
+              release binary — so installing again is how you move to a newer version, with no site change and no
+              installer edit. That fallback only happens when npm is unavailable, and only after the binary&apos;s
+              sha256 verifies against the release&apos;s <code>checksums.txt</code>. Pin with <code>VERSION</code> to
+              hold an exact release.
+            </p>
           </div>
-        </section>
 
-        <section id="verify" className="instr-section">
-          <h2 className="instr-section-title">Verify it works.</h2>
-          <p className="instr-section-lead">
-            Four commands, in order. The first confirms the install; the last confirms the index
-            answers.
+          <h2>Pin or upgrade</h2>
+          <p>
+            npm installs an exact version when you ask for one; re-run the install to move to a newer release:
           </p>
-          <ol className="instr-steps">
-            <li className="instr-step">
-              <span className="instr-step-num">01</span>
-              <div>
-                <h3>Check the version</h3>
-                <p>Should print the release you installed.</p>
-                <pre className="instr-pre">bb --version</pre>
-              </div>
-            </li>
-            <li className="instr-step">
-              <span className="instr-step-num">02</span>
-              <div>
-                <h3>Check the machine</h3>
-                <p>Reports Node, bindings, index paths and anything missing, with a fix for each.</p>
-                <pre className="instr-pre">bb doctor</pre>
-              </div>
-            </li>
-            <li className="instr-step">
-              <span className="instr-step-num">03</span>
-              <div>
-                <h3>Index a project</h3>
-                <p>Run it from the repository you want to ask about. The index is a local SQLite file.</p>
-                <pre className="instr-pre">{`cd your-project
-bb index`}</pre>
-              </div>
-            </li>
-            <li className="instr-step">
-              <span className="instr-step-num">04</span>
-              <div>
-                <h3>Ask it something</h3>
-                <p>Search returns symbols with their exact bounds; the MCP tools return the graph facts.</p>
-                <pre className="instr-pre">{`bb search "resolveEmbeddingConfig"
-bb stats`}</pre>
-              </div>
-            </li>
-          </ol>
-        </section>
-
-        <section id="included" className="instr-section">
-          <h2 className="instr-section-title">What gets installed.</h2>
-          <div className="instr-grid">
-            <div className="instr-surface">
-              <p className="instr-surface-label">The package</p>
-              <h3>@backbencher/brain</h3>
-              <p>
-                The published npm package. The shell and PowerShell installers resolve to the same
-                package when npm is available; a release binary is only a fallback and is accepted
-                after its checksum verifies.
-              </p>
-            </div>
-            <div className="instr-surface">
-              <p className="instr-surface-label">The binary</p>
-              <h3>bb</h3>
-              <p>
-                The CLI, the language server and the MCP server in one executable. No daemon, no
-                background service, nothing listening on a port.
-              </p>
-            </div>
-            <div className="instr-surface">
-              <p className="instr-surface-label">The index</p>
-              <h3>A local SQLite file</h3>
-              <p>
-                Symbols, imports and relationship edges for the projects you index. It lives in your
-                user data directory; it is never uploaded.
-              </p>
-            </div>
-          </div>
-          <p className="instr-note">
-            Node.js &gt;= 18 is required for npm installs. The installers do not modify shell profiles
-            silently: they print the line to add, and each failure names the exact URL or command
-            that was tried.
-          </p>
-        </section>
-
-        <section id="pin" className="instr-section">
-          <h2 className="instr-section-title">Pin or upgrade.</h2>
-          <p className="instr-section-lead">
-            npm installs an exact version when you ask for one; re-run the install to move to a newer
-            release. Upgrading keeps your data: the schema migrates in place and the index is never
-            wiped.
-          </p>
-          <div className="instr-grid">
-            <div className="instr-surface">
-              <p className="instr-surface-label">npm</p>
-              <pre className="instr-pre">{`# latest
+          <pre><code>{`# current release
 npm install -g @backbencher/brain@latest
 
-# pin any published release
-npm install -g @backbencher/brain@<version>`}</pre>
-            </div>
-            <div className="instr-surface">
-              <p className="instr-surface-label">Shell / PowerShell</p>
-              <pre className="instr-pre">{`# pin this release
-VERSION=<version> \\
-  curl -fsSL https://backbencher.cc/install.sh | bash
-
-# Windows
-$env:VERSION="<version>"
-irm https://backbencher.cc/install.ps1 | iex`}</pre>
-            </div>
-          </div>
-        </section>
-
-        <section id="next" className="instr-section">
-          <h2 className="instr-section-title">Next.</h2>
-          <p className="instr-section-lead">
-            The install is the smallest step. These are the four pages that make the index useful.
+# pin an exact release
+npm install -g @backbencher/brain@${TRUTH.version}`}</code></pre>
+          <p>
+            The installer scripts accept the same pin through <code>VERSION</code>, and install the same npm package:
           </p>
-          <div className="instr-next-grid">
-            <Link className="instr-next" href="/docs#first-index">
-              <strong>Index your first project →</strong>
-              <span>What bb reads, what it skips, and what the first index proves.</span>
-            </Link>
-            <Link className="instr-next" href="/docs#mcp">
-              <strong>Connect an MCP client →</strong>
-              <span>Point Claude Code, Cursor, VS Code or another host at the local server.</span>
-            </Link>
-            <Link className="instr-next" href="/docs#embeddings">
-              <strong>Turn on semantic search →</strong>
-              <span>Optional embeddings with a provider you configure, or the local word vectors.</span>
-            </Link>
-            <Link className="instr-next" href="/editors">
-              <strong>Use it in your editor →</strong>
-              <span>Hover with evidence tiers, definition, references and impact in bb_lsp.</span>
-            </Link>
+          <pre><code>{`# current release
+curl -fsSL https://backbencher.cc/install.sh | bash
+
+# pin an exact release
+VERSION=${TRUTH.version} curl -fsSL https://backbencher.cc/install.sh | bash`}</code></pre>
+          <p>
+            On Windows: <code>irm https://backbencher.cc/install.ps1 | iex</code>, pinned with{" "}
+            <code>$env:VERSION=&quot;{TRUTH.version}&quot;</code>. Upgrading keeps your data: the schema migrates in
+            place and the index is never wiped.
+          </p>
+
+          <h2>Next steps</h2>
+          <ul>
+            <li>
+              Index a project: <code>bb index</code> — see the <Link href="/docs#first-index">first index guide</Link>.
+            </li>
+            <li>
+              Connect an MCP client: <code>bb mcp</code> — see the <Link href="/docs#mcp">MCP server docs</Link>.
+            </li>
+            <li>
+              Enable semantic search: <code>bb setup</code> — see <Link href="/docs#embeddings">embeddings setup</Link>.
+            </li>
+          </ul>
+
+          <div className="page-actions">
+            <Link className="btn" href="/docs">Read the docs <span aria-hidden>→</span></Link>
+            <Link className="btn-ghost" href="/support">Common questions</Link>
           </div>
-        </section>
+        </div>
       </div>
-    </InstrumentShell>
+    </AtlasPage>
   )
 }

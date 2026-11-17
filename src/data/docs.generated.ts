@@ -1,17 +1,24 @@
-// Generated in the product repository from the real CLI surface. Do not edit by
-// hand. Sources there: the CLI help, the command/option declarations, the
-// indexer's skip/size/derived-phase constants, the auto-refresh budgets and the
-// data-directory shape — so this file cannot drift from the CLI it documents.
+// GENERATED FILE — do not edit by hand.
+// npx tsx script/m56/generate-docs-data.ts --write
+//
+// Sources (all machine-read; see script/m56/generate-docs-data.ts):
+//   - the real CLI help (run from source via script/m56/cli-probe.ts)
+//   - src/cli/index.ts (.command/.option declarations — parity instrument)
+//   - src/ast/parallel-indexer.ts (skip dirs, size tiers, derived phases, derivedPass)
+//   - src/ast/auto-refresh.ts (auto-refresh budgets and the env allowlist)
+//   - src/util/bb-data-dir.ts (storage shape, proven with a temp BB_DATA_DIR)
+//
+// Verified byte-for-byte by script/m56/verify-docs-completeness.ts.
 
 export const DOCS_FACTS = {
   "schemaVersion": 1,
-  "generatedBy": "the product repository",
+  "generatedBy": "npx tsx script/m56/generate-docs-data.ts --write",
   "generatedFrom": [
-    "the real CLI help",
-    "the CLI command and option declarations",
-    "the indexer's skip directories, size tiers and derived phases",
-    "the auto-refresh budgets and the environment allowlist",
-    "the data-directory storage shape"
+    "the real CLI help (run from source via script/m56/cli-probe.ts)",
+    "src/cli/index.ts (.command/.option declarations — parity instrument)",
+    "src/ast/parallel-indexer.ts (skip dirs, size tiers, derived phases, derivedPass)",
+    "src/ast/auto-refresh.ts (auto-refresh budgets and the env allowlist)",
+    "src/util/bb-data-dir.ts (storage shape, proven with a temp BB_DATA_DIR)"
   ],
   "indexing": {
     "skipDirs": [
@@ -527,7 +534,7 @@ export const DOCS_FACTS = {
               "--verbose-config"
             ],
             "argument": null,
-            "description": "show effective embedding config + per-field source "
+            "description": "show effective embedding config + per-field source (M40.A8)"
           }
         ],
         "subcommands": [],

@@ -24,7 +24,7 @@
 // This module deliberately imports NOTHING. The sitemap and three verification
 // gates all need this list, and importing `../brain-languages` here would drag
 // the icon library into a build-time sitemap and into repo-root scripts that
-// resolves its imports the same way. Drift against the language dataset is
+// cannot resolve `website/node_modules`. Drift against the language dataset is
 // caught by the import-time validation in ./index.ts, which does have the
 // dataset; this file stays a pure declaration.
 
@@ -45,7 +45,7 @@ export const FAMILY_SLUGS: Record<string, string> = {
   Zig: "zig",
   "Objective-C": "objective-c",
   "Visual Basic": "visual-basic",
- // Added with the VBA lane: `vba` is its own registry key with its own
+  // Added with the M60 VBA lane: `vba` is its own registry key with its own
   // analyzer (real-vba-analyzer.ts), separate from `vb` (VB.NET). It was a
   // registry language with no display family until the language dataset became
   // generated; /languages/vba exists from this line, and hasDepth("VBA") is

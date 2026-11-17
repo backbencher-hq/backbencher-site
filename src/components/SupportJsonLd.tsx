@@ -1,8 +1,10 @@
 import { SUPPORT_QA } from "@/data/support.generated"
 
 // FAQPage structured data for /support — the expandable FAQ rich result in
-// search. Derived from the same array the page renders (support.generated.ts),
-// so search engines are never told an answer a reader cannot see.
+// search. Derived from the SAME array the page renders (support.generated.ts,
+// generated from website/faq.md). No answer can be published here that the
+// page does not show: verify-support-page.ts proves the three agree
+// (markdown → JSON-LD → rendered HTML).
 export function SupportJsonLd() {
   const data = {
     "@context": "https://schema.org",

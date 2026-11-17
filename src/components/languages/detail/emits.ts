@@ -1,15 +1,27 @@
 import { RELATIONSHIP_TYPES } from "@/data/brain-languages"
 import type { LangFamily, RelationshipTypeName } from "@/data/brain-languages"
 
-// Helpers that derive what a language record may claim about an analyzer's reach.
+// What this page knows about an analyzer's reach, derived — never asserted.
 //
-// The record can state two things without inventing: the family row's `extracts`
-// line (what the analyzer records) and `emits` (the relationship types its module
-// can construct). Everything else comes from the authored depth record. There is
-// deliberately no sentence bank: a template that assigns copy by tier is a claim
-// nobody checked against an analyzer.
+// WHY A HELPER INSTEAD OF A TEMPLATE
+// ----------------------------------
+// Round 1 of these pages had a `tier` on every family (full / structural /
+// generic) and a library of prewritten sentences to go with it. Three of those
+// sentences were false, and they were false on four live pages: TOML, Protobuf,
+// Visual Basic and Nim were all described as having "no dedicated analyzer" and
+// "no call graph is resolved". Every one of those families has a large
+// hand-written analyzer wired into `getAnalyzer`, and `GenericAnalyzer` is the
+// unreachable `default:` branch of that switch. The tier ranked the product
+// backwards — it put PowerShell beside TOML.
+//
+// So there is no sentence bank here. A family row carries two things this page
+// can state without inventing: the `extracts` line (what the analyzer records)
+// and `emits` (the relationship types its module can construct, derived from
+// src/ast/real-*-analyzer.ts). Anything else on the page — the headline, the
+// limitations — comes from the family's authored record in data/language-depth,
+// and where that record has not landed the page simply says less.
 
-/** The fourteen types the engine's RelationshipType enum declares. */
+/** The ten types the engine's RelationshipType enum declares. */
 export const VOCABULARY_SIZE = RELATIONSHIP_TYPES.length
 
 /**

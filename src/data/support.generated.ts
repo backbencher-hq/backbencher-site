@@ -1,10 +1,14 @@
-// Generated in the product repository from its FAQ source. Do not edit by hand.
+// GENERATED FILE — do not edit by hand.
+// npx tsx script/m56/generate-support-data.ts --write
 //
-// The support page renders these answers grouped by section and SupportJsonLd
-// derives the FAQPage JSON-LD from the same array, so the structured data and
-// the page cannot disagree. Answers are normalized plain text (markdown stripped,
-// links kept as "label (href)"). The footer fields (source, truth cross-check)
-// describe provenance for maintainers, not rendered product claims.
+// Single FAQ source (M56.S1): parsed from website/faq.md. Two consumers:
+//   - website/src/app/support/page.tsx renders these QAs (grouped by section)
+//   - website/src/components/SupportJsonLd.tsx derives FAQPage JSON-LD from the
+//     SAME array — a search engine is never told anything the page does not show.
+// Answers are normalized plain text (markdown stripped, links kept as "label (href)").
+// The truth cross-check ran at generation time: every count faq.md states agrees
+// with the engine registry (tables=16, tools=16, languages=50/53).
+
 export interface SupportQA {
   q: string
   section: string
@@ -74,7 +78,7 @@ export const SUPPORT_QA: SupportQA[] = [
   {
     q: "Is Backbencher open source?",
     section: "The product",
-    a: "Yes. Backbencher Brain is open source under the MIT license. The CLI, the MCP server, the language server and the website are published at backbencher-hq on GitHub; you can read the code, file issues and send pull requests.",
+    a: "Not right now. The engine is being prepared for a future release; today it ships as installable binaries. We prefer to say that plainly rather than dress it up — honesty about the product is the same discipline we apply to the tool's own output.",
   },
   {
     q: "How much does it cost?",
@@ -191,4 +195,4 @@ export const SUPPORT_CHANNELS = [
   }
 ]
 
-export const SUPPORT_SOURCE = "the product FAQ source"
+export const SUPPORT_SOURCE = "website/faq.md"

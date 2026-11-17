@@ -6,6 +6,8 @@ import type { LangFamily } from "@/data/brain-languages"
 import { depthFor, languageHref, slugFor, slugToFamily } from "@/data/language-depth"
 import { TRUTH } from "@/data/truth.generated"
 import { LANGUAGE_RULINGS } from "@/data/language-rulings.generated"
+import { AtlasPage, PageHead } from "@/components/atlas/AtlasPage"
+import { LANGUAGE_DETAIL_ATLAS_CSS } from "@/components/languages/atlas-css"
 import {
   emittedTypes,
   reachLabel,
@@ -13,21 +15,59 @@ import {
   unconstructedTypes,
   VOCABULARY_SIZE,
 } from "@/components/languages/detail/emits"
-import { highlight } from "@/components/languages/detail/highlight"
-import { InstrumentShell } from "@/components/instrument/InstrumentShell"
+import { CLAIMS, highlight } from "@/components/languages/detail/highlight"
 import { Rich } from "@/components/languages/detail/Rich"
 
-// /languages/[slug] — one record per language family.
+// /languages/[slug] — one page per family, answering one question about it.
 //
-// The page answers one question: what does indexing this language buy you, and
-// what does it not? Every claim comes from a generated or authored source — the
-// family row (extensions, registry ids, recorded symbols, emitted types), the
-// family's authored record in data/language-depth, the generated ruling table for
-// absent relationship types, and TRUTH for the counts the site shares. Where the
-// record has not landed the page shows less; it never falls back to a template.
+// WHY THIS PAGE EXISTS
+// --------------------
+// The owner of this project said it plainly: "in the languages take, only the
+// languages are listed, nothing at all is told there of what is being done
+// there, like just the names of languages, that's it." The register fixed the
+// listing half. This is the page that answers the question a reader arrives with:
 //
-// `output: static` generates every declared slug; dynamicParams = false makes an
-// unknown slug a 404. Slugs come from data/language-depth/slugs, never hand-set.
+//     what does indexing this language buy me, and what does it not?
+//
+// WHAT IT MAY AND MAY NOT SAY (round 2)
+// --------------------------------------
+// Round 1 of these pages rendered tier-based boilerplate, and on four live pages
+// — TOML, Protobuf, Visual Basic, Nim — it asserted that they had no dedicated
+// analyzer and no call graph. Every one of those families has a large
+// hand-written analyzer wired into `getAnalyzer`; `GenericAnalyzer` is that
+// switch's unreachable `default:` branch. So this page carries no sentence bank.
+// Every claim on it comes from one of three places, and nowhere else:
+//
+//   · the family row — extensions, registry ids, recorded symbols, `emits`;
+//   · the family's authored record in data/language-depth;
+//   · the generated ruling table (data/language-rulings.generated.ts), which
+//     says whether the analyzer page records a ruling for an absent type;
+//   · TRUTH, for the counts the whole site shares.
+//
+// Where the record has not landed, the page shows less. It does not substitute a
+// template, because the template is what produced the lie: a prewritten "ceiling"
+// line, chosen by tier, is a sentence nobody checked against an analyzer.
+//
+// THE ORDER IS AN ARGUMENT
+// ------------------------
+// The headline says what you get. The registry row and the ledger say how much,
+// and which of the engine's fourteen relationship types are in play. Limitations
+// comes next, because it is the other half of the same sentence and belongs in the
+// first screen. Then the mechanics — where the files sit, what an agent can ask,
+// what the analyzer sees in one of them — and only then the exits.
+//
+// 2026-11-07 — Evidence Atlas surface. AtlasPage chrome + PageHead, the reading
+// column from globals.css, one hairline table for the ledger, one night plate for
+// the sample. The previous page-local component set (Frame/RegistryFacts/AskList/
+// SnippetPlate/Limitations/RelatedLanguages) was replaced by this page's own
+// markup so the heading outline is the reading column's (h2 sections, no eyebrow
+// kickers) and every fact still renders once.
+//
+// ROUTING
+// -------
+// `output: static`, so every declared slug is generated from the slug contract
+// and `dynamicParams = false` makes an unknown slug a 404 rather than an empty
+// page. Slugs are never hand-written: they come from data/language-depth/slugs.
 
 type Params = Promise<{ slug: string }>
 
@@ -63,7 +103,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     // Unique per family for the same reason: the extensions, the recorded
     // symbols and the size of the emitted vocabulary are all family-specific, so
     // no two of these descriptions can collide.
-    description: `${parser.name} in bb: ${reach}/${VOCABULARY_SIZE} relationship types constructed, the symbols the index records, and the limits of the record.`,
+    description: `${parser.ext} files: bb records ${parser.extracts}, and constructs ${reach} of the engine's ${VOCABULARY_SIZE} relationship types. What an agent can retrieve from ${parser.name} code — and the limitations that come with it.`,
     alternates: { canonical: `/languages/${slugFor(parser.name)}` },
   }
 }
@@ -107,8 +147,9 @@ export default async function LanguageDetailPage({ params }: { params: Params })
   const tokens = sample ? highlight(sample.code) : []
 
   return (
-    <InstrumentShell active="/languages">
-      <div className="instr-wrap instr-page">
+    <AtlasPage>
+      <style dangerouslySetInnerHTML={{ __html: LANGUAGE_DETAIL_ATLAS_CSS }} />
+      <div className="container">
         {/* Breadcrumb — a leaf page must show where it hangs. */}
         <nav aria-label="Breadcrumb" className="lang-crumb">
           <Link href="/languages">← All languages</Link>
@@ -119,15 +160,7 @@ export default async function LanguageDetailPage({ params }: { params: Params })
         </nav>
 
         {/* Head — what indexing this family buys you, in one sentence. */}
-        <div className="instr-page-head">
-          <p className="instr-eyebrow">Language record</p>
-          <h1 className="instr-title">{parser.name}</h1>
-          <p className="instr-page-lead">{headline}</p>
-          <p className="instr-page-meta">
-            {parser.ext} · {parser.ids.length} registry {parser.ids.length === 1 ? "id" : "ids"} ·{" "}
-            {emitted.length} of {VOCABULARY_SIZE} relationship types
-          </p>
-        </div>
+        <PageHead title={parser.name} lead={headline} meta={`${band?.label ?? "Unfiled"} · ${parser.ext}`} />
 
         <div className="reading">
           {/* The registry row, and the vocabulary it implies — the two blocks
@@ -215,8 +248,8 @@ export default async function LanguageDetailPage({ params }: { params: Params })
                   ? ` The other ${unrecordedAbsent.length} ${unrecordedAbsent.length === 1 ? "has" : "have"} no recorded ruling and ${unrecordedAbsent.length === 1 ? "is" : "are"} shown as not constructed; this page makes no claim about why.`
                   : ` This family's completeness record does not agree with the analyzer-source derivation on the emitted vocabulary, so no per-type ruling is claimed for ${unrecordedAbsent.length === 1 ? "that absence" : "those absences"}; ${unrecordedAbsent.length === 1 ? "it is" : "they are"} shown as not constructed and ${unrecordedAbsent.length === 1 ? "its" : "their"} absence is a derived fact, not a format claim.`
                 : ""}{" "}
-              <Link href="/languages#relationship-vocabulary">The register</Link> explains what each
-              label means.
+              <Link href="/languages#relationship-vocabulary">The register</Link> defines constructed, ruled and the
+              gates each is checked by.
             </p>
           ) : null}
 
@@ -232,9 +265,9 @@ export default async function LanguageDetailPage({ params }: { params: Params })
                 ))}
               </ul>
               <p className="lang-ledger-note">
-                Every line above was written against {parser.name}’s own analyzer module and is named against a
+                Every line above was written against {parser.name}&apos;s own analyzer module and is named against a
                 construct in it, so it can be checked against the source. Nothing here is inherited from a template, or
-                from another language’s page.
+                from another language&apos;s page.
               </p>
             </>
           ) : (
@@ -296,7 +329,7 @@ export default async function LanguageDetailPage({ params }: { params: Params })
                 <pre>
                   <code>
                     {tokens.map((token, i) => (
-                      <span key={i} className={`tok tok-${token.kind}`}>
+                      <span key={i} className={CLAIMS[token.kind]}>
                         {token.value}
                       </span>
                     ))}
@@ -314,7 +347,7 @@ export default async function LanguageDetailPage({ params }: { params: Params })
           {/* The exit, so the page never dead-ends. */}
           <h2>Languages that turn up in the same repository</h2>
           <p>
-            {band?.label ?? "This band"} — the count beside each name is how many relationship types that family’s
+            {band?.label ?? "This band"} — the count beside each name is how many relationship types that family&rsquo;s
             analyzer constructs.
           </p>
           {siblings.length > 0 ? (
@@ -339,7 +372,7 @@ export default async function LanguageDetailPage({ params }: { params: Params })
             The extensions, registry names, recorded symbols and relationship types above are the parser registry row
             for {parser.name}, read while the page rendered — the same row <Link href="/languages">the register</Link>{" "}
             reads, so the two surfaces cannot tell two stories. Every relationship type listed as constructed appears
-            in <code>src/ast/real-*</code>, the analyzer modules bb ships. bb answers from a local store
+            in <code>src/ast/real-*</code>, the analyzer modules bb ships. bb {TRUTH.version} answers from a local store
             over {PARSERS.length} languages ({TRUTH.languages.classified} registry ids, three of them aliases).
              There is no benchmark on this page: every claim here is one you can go and read in the source.
           </p>
@@ -357,6 +390,6 @@ export default async function LanguageDetailPage({ params }: { params: Params })
           </Link>
         </div>
       </div>
-    </InstrumentShell>
+    </AtlasPage>
   )
 }

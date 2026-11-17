@@ -1,10 +1,12 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { InstrumentShell } from "@/components/instrument/InstrumentShell"
+import { AtlasPage, PageHead } from "@/components/atlas/AtlasPage"
 
-// A branded dead end on the instrument surface: same nav, same tokens, and the
-// six real destinations instead of a bare 404. Excluded from the sitemap and
-// kept out of the index; crawlers may still follow the links.
+// A branded 404 on the atlas. The route contract excludes it from the sitemap,
+// and `robots` keeps it out of the index while still letting crawlers follow
+// the links. The chrome is the shared AtlasPage, so the dead end still offers
+// the six surfaces (the legacy fixed nav is suppressed by the body:has(.atlas)
+// rule and by ATLAS_ROUTES on the real routes).
 
 export const metadata: Metadata = {
   title: "Page not found",
@@ -14,44 +16,36 @@ export const metadata: Metadata = {
 const SURFACES: { href: string; label: string; note: string }[] = [
   { href: "/install", label: "Install", note: "The one command to get bb on your machine." },
   { href: "/docs", label: "Docs", note: "First index, how it works, the full CLI reference." },
-  { href: "/tools", label: "Tools", note: "The agent tool contracts and what each refuses." },
-  { href: "/languages", label: "Languages", note: "What indexing each language buys you." },
-  { href: "/editors", label: "Editors", note: "bb_lsp in VS Code, Zed, Helix and JetBrains." },
+  { href: "/tools", label: "Tools", note: "The 16 agent contracts and what each refuses." },
+  { href: "/languages", label: "Languages & analyzers", note: "What indexing each language buys you." },
+  { href: "/editors", label: "Editors & IDEs", note: "bb_lsp in VS Code, Zed, Helix and JetBrains." },
   { href: "/support", label: "Support", note: "Answers to the questions people actually ask." },
 ]
 
 export default function NotFound() {
   return (
-    <InstrumentShell>
-      <div className="instr-wrap instr-page">
-        <div className="instr-page-head">
-          <p className="instr-eyebrow">404 · page not found</p>
-          <h1 className="instr-title">This address doesn’t exist.</h1>
-          <p className="instr-page-lead">
-            The page may have moved, or the link may be a typo. Nothing is lost — pick a surface
-            below, or start from the homepage.
-          </p>
-          <div className="instr-close-row" style={{ marginTop: 24 }}>
-            <Link className="instr-btn" href="/">
-              Back to the homepage <span aria-hidden>→</span>
-            </Link>
-            <Link className="instr-btn-ghost" href="/install">
-              Install bb
-            </Link>
-          </div>
+    <AtlasPage>
+      <div className="container">
+        <PageHead
+          title="This address doesn't exist."
+          lead="The page may have moved, or the link may be a typo. Nothing is lost — pick a surface below, or start from the homepage."
+          meta="404 · page not found"
+        />
+        <div className="page-actions" style={{ borderTop: 0, marginTop: 26, paddingTop: 0 }}>
+          <Link className="btn" href="/">Back to the homepage</Link>
+          <Link className="btn-ghost" href="/install">Install bb</Link>
         </div>
-        <section className="instr-section">
-          <h2 className="instr-section-title">Where you can go instead.</h2>
-          <div className="instr-next-grid instr-next-grid-3">
+        <div className="reading">
+          <h2>Where you can go instead</h2>
+          <ul>
             {SURFACES.map((surface) => (
-              <Link className="instr-next" href={surface.href} key={surface.href}>
-                <strong>{surface.label} →</strong>
-                <span>{surface.note}</span>
-              </Link>
+              <li key={surface.href}>
+                <Link href={surface.href}>{surface.label}</Link> — {surface.note}
+              </li>
             ))}
-          </div>
-        </section>
+          </ul>
+        </div>
       </div>
-    </InstrumentShell>
+    </AtlasPage>
   )
 }

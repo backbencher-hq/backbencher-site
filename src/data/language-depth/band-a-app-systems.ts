@@ -34,7 +34,7 @@ import type { LanguageDepth } from "./types"
 export const BAND_DEPTH: Record<string, LanguageDepth> = {
   TypeScript: {
     headline:
-      "TypeScript is one of only two families bb supports that construct all fourteen relationship types, and the one where they connect: imports and exports name both what a symbol reaches and who reaches it, so an agent can walk out from a declaration to everything that breaks if it changes.",
+      "TypeScript is one of only two families bb supports that construct all ten relationship types, and the one where they connect: imports and exports name both what a symbol reaches and who reaches it, so an agent can walk out from a declaration to everything that breaks if it changes.",
     agentAsks: [
       "Which functions and components import this one?",
       "What breaks downstream if I rename this export?",

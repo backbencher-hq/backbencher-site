@@ -11,7 +11,7 @@ const config: Config = {
       colors: {
         background: "#0E0A07",
         foreground: "#F1E9DD",
-        // Editorial palette mapped from the warm neutrals
+        // Warm-dark editorial palette (M41.D1) — mapped from the cream/terracotta
         // identity of ishaq2321.github.io onto a dark canvas.
         warm: {
           bg: "#0E0A07",

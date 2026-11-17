@@ -2,14 +2,20 @@ import type { MetadataRoute } from "next"
 import { RETIRED_ROUTES } from "@/lib/redirects"
 import { FAMILY_SLUGS } from "@/data/language-depth/slugs"
 
-// The real route list. It is kept in sync with the routes on disk: a page added
-// without an entry here would be invisible to search, so this list is reviewed
-// with any route change. `lastModified` is deliberately not emitted — a pinned
-// date goes stale and a build-time `now` is fake freshness, so the honest choice
-// is to omit the optional field until a content-date pipeline exists.
+// The real route list. verify-seo.ts discovers the routes from website/src/app
+// on disk and requires this list to match EXACTLY — a page added without a
+// sitemap entry (or a sitemap entry with no page) fails the gate. That is how
+// the legal pages went missing once; it cannot happen silently again.
+// lastModified is deliberately NOT emitted: pinned dates went stale (every
+// route said 2026-09-13 while the content changed), and a build-time `now`
+// would be a fake freshness signal. The sitemap spec makes lastmod optional;
+// omitting it is the honest option until a per-page content-date pipeline
+// exists. Reintroduce it only from a derived source.
 //
-// Retired routes (lib/redirects.ts) are listed for route parity with the disk but
-// filtered out of the sitemap: a sitemap lists canonical URLs only.
+// M56.I1: RETIRED_ROUTES (lib/redirects.ts) are listed here because their
+// directories exist on disk and parity is with the disk, but sitemap() filters
+// them out — a sitemap lists canonical URLs only. The redirect destinations are
+// the indexable routes, and they are listed below.
 const ROUTES: { path: string; priority: number; changeFrequency: "monthly" | "weekly" }[] = [
   { path: "", priority: 1.0, changeFrequency: "weekly" },
   { path: "/install", priority: 0.9, changeFrequency: "monthly" },
@@ -18,7 +24,7 @@ const ROUTES: { path: string; priority: number; changeFrequency: "monthly" | "we
   { path: "/languages", priority: 0.8, changeFrequency: "monthly" },
   { path: "/editors", priority: 0.8, changeFrequency: "monthly" },
   { path: "/support", priority: 0.7, changeFrequency: "monthly" },
-  // Retired paths: kept for route parity with the disk, excluded from the sitemap.
+  // M56.I1: kept for route parity with the disk; excluded from the sitemap.
   { path: "/demos", priority: 0.3, changeFrequency: "monthly" },
   { path: "/faq", priority: 0.3, changeFrequency: "monthly" },
   { path: "/contact", priority: 0.3, changeFrequency: "monthly" },

@@ -201,7 +201,7 @@ place(Order) -> lists:sort([Order]).  % bb records: a remote call to lists:sort`
     ],
     limitations: [
       "new is the only thing that distinguishes a construction in F#, so a bare Foo(...) stays a call — a capitalised name is not evidence — and the undecided calls/instantiates boundary is the largest class on both sides of the differential, 116 edges against 14.",
-      "The ambiguous type X = SomeType is refused rather than guessed at: a one-case union and a type abbreviation are the same text, and a pinned corpus measured 114 such sites per 400 files.",
+      "The ambiguous type X = SomeType is refused rather than guessed at: a one-case union and a type abbreviation are the same text, and script/m14 measured 114 such sites per 400 files.",
       "The member val X : int with get, set form does not parse under the pinned grammar, so such a property is recorded as a parse error rather than as a symbol, and roughly 890 occurrences of it exist in the F# compiler corpus alone.",
     ],
     sample: {
@@ -252,7 +252,7 @@ instance Chargeable Order where charge o = o.total   // bb records: Chargeable i
 
   Nim: {
     headline:
-      "Nim is indexed by a 3,098-line analyzer that publishes twelve symbol kinds and twelve relationship types — including calls, instantiates and overrides — matching a method against the method set of every type this file declares as one of its subtypes.",
+      "Nim is indexed by a 3,098-line analyzer that publishes twelve symbol kinds and eight relationship types — including calls, instantiates and overrides — matching a method against the method set of every type this file declares as one of its subtypes.",
     agentAsks: [
       "Which routines does this file declare, and which keyword spelled each one?",
       "Which types and fields does this module define?",

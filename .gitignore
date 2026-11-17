@@ -1,25 +1,8 @@
-# dependencies / build
-node_modules/
-.next/
-out/
-build/
-.turbo/
-*.tsbuildinfo
-
-# local environment (never commit real values)
-.env
-.env.local
-.env*.local
-.env.vercel
-.vercel/
-
-# tooling / OS
-*.log
-.DS_Store
-coverage/
-.astro/
-
-# local review tooling (screenshots, temporary browser profiles)
-.shots/
 .vercel
-.env*
+.next/
+.env.vercel
+.env.local
+*.log
+*.tsbuildinfo
+.astro/
+node_modules/

@@ -8,7 +8,7 @@ import {
   Highlighter,
   RefreshCw,
   Search,
-  Shield,
+  SearchCheck,
   Sparkles,
   StickyNote,
   Target,
@@ -18,7 +18,7 @@ import {
 } from "lucide-react"
 import { TOOL_FACTS, type ToolFact } from "./tools.generated"
 
-// (#781) — presentation-only join layer.
+// M56.T1 (#781) — presentation-only join layer.
 //
 // Every tool FACT (name, summary, description, parameters, defaults, examples,
 // returns, errors, limitations, performance, safety, evidence, staleness,
@@ -66,7 +66,7 @@ const TOOL_ICONS: Record<string, typeof Search> = {
   bb_index: RefreshCw,
   bb_health: HeartPulse,
   bb_patterns: GitBranch,
-  bb_security: Shield,
+  bb_security: SearchCheck,
   bb_migrate: Database,
   bb_visualize: Zap,
   bb_graph: Waypoints,
@@ -81,7 +81,7 @@ export const GROUP_ORDER: ToolGroup[] = ["Discovery", "Analysis", "Diagnostics",
 export const GROUP_META: Record<ToolGroup, { icon: typeof Search; blurb: string }> = {
   Discovery: { icon: Search, blurb: "find symbols, files, and answers fast" },
   Analysis: { icon: Activity, blurb: "graph, impact, and evidence-backed reports" },
-  Diagnostics: { icon: HeartPulse, blurb: "health, security, and architecture views" },
+  Diagnostics: { icon: HeartPulse, blurb: "health, lead review, and architecture views" },
   Operations: { icon: Wrench, blurb: "guarded index and source mutations" },
 }
 

@@ -2,7 +2,7 @@
 
 // GoatCounter analytics — cookieless, no personal data (matches the site's
 // privacy story). bbstats.goatcounter.com is the site code created for
-// backbencher.cc in the project GoatCounter account.
+// backbencher.cc in the owner's GoatCounter account.
 //
 // Counting contract (no double counts, no lost navigations):
 //   - The count.js script auto-counts the INITIAL pageview when it loads.

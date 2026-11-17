@@ -39,13 +39,13 @@
 // 5. `limitations` must be specific to THAT family AND must be checkable. A
 //    line that would read identically for every language is a wasted line; a
 //    line you cannot point at a construct for is a decoration. The repo's own
-//    bar is that a ruled-out capability
+//    bar (script/m14/ontology-coverage-gate.ts) is that a ruled-out capability
 //    needs a corpus measurement proving the construct never occurs.
 // 6. Never invent a benchmark, a latency number, an accuracy percentage, or a
 //    language-support claim that is not already registry-owned. Where a
-//    measured number exists in an evidence record, name the artifact in a note to
+//    measured number exists in validation/**, name the artifact in a note to
 //    the master agent rather than asserting it here.
-// 7. `docs/-HONESTY-CONTRACT.md` §1 bans these words in anything you write:
+// 7. `docs/M14-HONESTY-CONTRACT.md` §1 bans these words in anything you write:
 //    perfect, complete, fully done, production-ready, bulletproof,
 //    rock-solid, battle-tested, extensively tested, thoroughly reviewed,
 //    should work, expected to pass, and unscoped "100% coverage". A claim is
