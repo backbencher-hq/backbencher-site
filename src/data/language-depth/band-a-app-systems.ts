@@ -45,6 +45,7 @@ export const BAND_DEPTH: Record<string, LanguageDepth> = {
       "Runtime globals are excluded from construction: new Promise() and new Map() record no instantiation edge, because those build the platform's runtime rather than a type declared in the repository.",
       "A computed call names no callee, so handlers[key]() records nothing, and a decorator's argument list is walked for names but not for calls.",
       "Override matching abstains instead of pairing: when a name is overloaded on either side, or the base type is not in the indexed set, the member is left unmatched rather than attached to a candidate.",
+      "tsconfig `paths` aliases and barrel `index.ts` re-exports are not resolved. A non-relative specifier is recorded as external rather than mapped through the importing file's nearest tsconfig, so an `@/components/Button` import yields no edge to the file that declares it; the same import written as `./components/Button` does resolve.",
     ],
     sample: {
       caption: "A class, its interface and the member that implements it",
@@ -62,7 +63,7 @@ export class TokenStore implements Cacheable {
     whereItShowsUp: [
       ".ts and .tsx are separate registry languages, so a JSX component is indexed under tsx rather than folded into .ts.",
       "Declaration files (.d.ts) carry types with no bodies: the symbols are recorded and there is nothing to walk into.",
-      "Path aliases (@/lib/…) resolve through tsconfig, so a barrel index.ts sits between the import and the file that declares the symbol.",
+      "Only relative specifiers resolve to a project file. An `@/lib/…`, `~/…` or bare-package specifier is recorded as external, so it names no file in the index and produces no edge the graph can walk.",
     ],
   },
 
